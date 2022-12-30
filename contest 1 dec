@@ -1,0 +1,36 @@
+//all possible paths-https://course.acciojob.com/idle?question=8016f249-87ab-49f9-9c5a-b1b330732651
+import java.io.*;
+import java.util.*;
+class Main{
+	public static void main (String[] args) {
+		Scanner sc=new Scanner(System.in);
+        int n;
+        n=sc.nextInt();
+        int[] a= new int[n];
+        for(int i=0;i<n;i++){
+          a[i] = sc.nextInt();
+        }
+        Solution obj=new Solution();
+        obj.allpossiblepaths(0,a,n);		    
+    }
+}
+
+class Solution
+{
+	public void  paths(int i,int[] arr,int n,String str){
+
+		if(i==n-1){
+			System.out.println(str);
+			return;
+		}
+		//kaam
+		for(int j=1;j<=arr[i]&& i+j<n;j++){
+			int numb=i+j;
+			paths(i+j,arr,n,str+" -> "+numb);
+		}
+		
+	}
+    public void allpossiblepaths(int i,int[] arr,int n) {
+        paths(i,arr,n,"0");
+    }
+}
