@@ -1,0 +1,175 @@
+/*
+Reverse Sequence
+Your teacher gives you a sequence of N integers. He also gives you two integers, l and r. He then asks you to reverse the order of integers in the sequence from position l to r.
+
+To make the problem harder, he gives you the sequence in the form of a linked list.
+
+Note Complete the given function. The input and output would be handled by the driver code.
+
+Input Format
+The first line contains an integer, N.
+
+The next line contains N integers of the sequence.
+
+The next line contains l and r.
+
+Output Format
+Print the new sequence.
+
+Example 1
+Input
+
+5
+1 2 3 4 5
+2 4
+Output
+
+1 4 3 2 5
+Explanation
+
+The list is 1->2->3->4->5.
+
+After reversing the sequence from the mentioned position, which is 2->3->4, we get 4->3->2.
+
+Example 2
+Input
+
+3
+4 7 9
+2 3
+Output
+
+4 9 7
+Explanation
+
+The list is 4->7->9.
+
+After reversing the sequence from the mentioned position, which is 7->9, we get 9->7.
+
+Constraints
+1 <= N <= 10000
+*/
+//https://course.acciojob.com/idle?question=90271386-c126-4222-93a3-d0618311f997
+
+
+//*******************************************************************************************************************************************************************
+
+
+
+import java.io.*;
+import java.util.*;
+class Node
+    {
+        int data;
+        Node next;
+        Node(int d) {data = d; next = null; }
+    }
+class Main
+{
+    Node head;  
+    Node tail;
+	public void addToTheLast(Node node) 
+	{
+	  if (head == null) 
+	  {
+	   head = node;
+	   tail = node;
+	  } 
+	  else 
+	  {
+	   tail.next = node;
+	   tail = node;
+	  }
+	}
+      void printList(Node head)
+    {
+        Node temp = head;
+        while (temp != null)
+        {
+           System.out.print(temp.data+" ");
+           temp = temp.next;
+        }  
+        System.out.println();
+    }
+	public static void main(String args[])throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N= Integer.parseInt(br.readLine());
+        String S1[] = br.readLine().split(" ");
+        Main llist = new Main(); 
+        int a1=Integer.parseInt(S1[0]);
+        Node head= new Node(a1);
+        llist.addToTheLast(head);
+        for (int i = 1; i < N; i++) 
+        {
+            int a = Integer.parseInt(S1[i]);
+            llist.addToTheLast(new Node(a));
+        }
+        String S[] = br.readLine().split(" ");
+        int l = Integer.parseInt(S[0]);
+        int r = Integer.parseInt(S[1]);
+        Solution ob = new Solution();
+		Node newhead=ob.reverseSequence(llist.head, l, r);
+		llist.printList(newhead);
+    }}
+
+class Solution
+{
+	public static Node reverse(Node head){
+		Node curr=head;
+		Node follow=head;
+		Node pre=null;
+		while(curr!=null){
+			follow=follow.next;
+			curr.next=pre;
+			pre=curr;
+			curr=follow;
+		}
+		return pre;
+	}
+	public static Node rev(Node head){
+        Node curr=head;
+        Node follow=head;
+        Node pre =null;
+        while(curr!=null){
+					follow=follow.next;
+					curr.next=pre;
+					pre=curr;
+					curr=follow;
+				}
+				return pre;
+    } 
+    public static Node reverseSequence(Node head, int l, int r)
+    {
+		Node temp=head;
+		int i=1;
+		Node pr=null,rs=null,re=null,nr=null;
+		while(temp!=null){
+			if(i+1==l){
+				pr=temp;
+			}
+			if(i==l){
+				rs=temp;
+			}
+			if(i==r){
+				re=temp;
+				nr=temp.next;
+			}
+			temp=temp.next;
+			i++;
+		}
+		
+		re.next=null;       // before=4->5     //after= 4->null
+		
+		rev(rs);             //o/p==4->3->2
+		if(pr!=null){
+			pr.next=re;
+		}
+		else{
+			head=re;
+		}
+		rs.next=nr;     // 2->5
+		return(head);
+		
+    }
+}
