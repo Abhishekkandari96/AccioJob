@@ -1,0 +1,131 @@
+//**********************************************************************************************************************************************************************
+Sandalwood Scandal
+Pushpa Raj is being chased by the police in a forest. He wants to get out of the forest without getting caught, along with the sandalwood that he had stolen and hidden in different locations.
+
+Help Pushpa using the forest map.
+
+Here the forest map is represented in a M * N Matrix (Grid). Each cell can have 2 different values :
+
+a. Cell value >= 0 represents the number of sandalwood in that location.
+b. Cell value = -1, there is a police officer in that location.
+Currently Pushpa is at location (0, 0) he has to reach location (M-1, N-1) without getting caught.
+
+From a given cell (i, j), we are allowed to move to cells (i+1, j), (i+1,j+1), and (i, j+1) only.
+
+Print all possible paths to exit such that the sum of sandalwood collected is divisible by 5.
+
+While printing the paths, horizontal path is explored first followed by diagonal then vertical.
+
+i.e; Make the horizontal call first, followed by diagonal call then the vertical recursive call.
+
+Note Complete the given function. The input would be handled by the driver code. You have to print the output.
+
+Input Format
+The first line of the input contains two integers M (rows), N (cols) of the matrix,
+
+and next M lines consist of N integers each.
+
+Output Format
+All paths divisible by 5, each on a new line.
+
+Example 1
+Input
+
+4 4
+5 1 8 0
+0 -1 2 3
+-1 4 6 0
+1 2 1 1
+Output
+
+hhvhvv
+hdvhv
+hdvd
+Explanation
+
+hhvhvv => (5 -> 1 -> 8 -> 2 -> 3 -> 0 -> 1) => sum = 20
+
+hdvhv => (5 -> 1 -> 2 -> 6 -> 0 -> 1) => sum = 15
+
+hdvd => (5 -> 1 -> 2 -> 6 -> 1) => sum = 15
+
+Example 2
+Input
+
+2 2
+2 3
+5 3
+Output
+
+d
+vh
+Explanation
+
+d => (2 -> 3) => sum = 5
+
+vh => (2 -> 5 -> 3) => sum = 10
+
+Constraints
+1 <= M * N <= 16
+
+
+https://course.acciojob.com/idle?question=64b8de3a-5299-4183-9357-ac2831991c63
+//**********************************************************************************************************************************************************************
+import java.util.*;
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputLine;
+        inputLine = br.readLine().trim().split(" ");
+        int n = Integer.parseInt(inputLine[0]);
+        int m = Integer.parseInt(inputLine[1]);
+
+
+        int[][] grid = new int[n][m];
+        for(int i=0; i<n; i++){
+          String inputLine1[] = br.readLine().trim().split(" ");
+          for(int j=0; j<m; j++){
+            grid[i][j]=Integer.parseInt(inputLine1[j]);
+          }
+        }
+
+        Solution g = new Solution();
+        g.divisiblePaths(n, m, grid);
+  }
+}
+
+class Solution
+{ 
+	void paths(int cr,int cc,int m,int n,int[][] grid,String str,int sum){
+	 
+		if(cr==m-1&&cc==n-1){
+			sum=sum+grid[cr][cc];
+		 if(sum%5==0){
+			 
+		   System.out.println(str);
+		
+		 }
+		 return;
+		}
+		if(cr>m-1||cc>n-1){
+			return;
+		}
+		if(grid[cr][cc]==-1){
+			
+			return;
+		}
+
+
+		
+		paths(cr,cc+1,m,n,grid,str+'h',sum+grid[cr][cc]);
+		paths(cr+1,cc+1,m,n,grid,str+'d',sum+grid[cr][cc]);
+		paths(cr+1,cc,m,n,grid,str+'v',sum+grid[cr][cc]);
+		
+	}
+    void divisiblePaths(int m, int n, int[][] grid){
+
+		paths(0,0,m,n,grid,"",0);
+    }
+} 
+
