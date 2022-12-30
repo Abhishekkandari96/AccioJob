@@ -82,4 +82,43 @@ public class Main {
 		}
 		return myresult;
     }
-}                                
+}    
+
+
+//************************************ second way  ****************************************************
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int m = input.nextInt();
+        ArrayList<String> paths = getMazePaths(0, 0, n - 1, m - 1);
+        System.out.println(paths);
+    }
+
+    public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc) {
+		ArrayList<String> mr=new ArrayList<>();
+		get(sr,sc,dr,dc,mr,"");
+		return mr;
+}
+	public static void get(int sr,int sc,int dr, int dc,ArrayList<String> mr, String str){
+
+		if(sr==dr && sc==dc){
+			mr.add(str);
+			return;
+		}
+		if(sr>dr ||sc>dc){
+			return;
+		}
+
+		get(sr,sc+1,dr,dc,mr,str+"h");
+		get(sr+1,sc,dr,dc,mr,str+"v");
+		
+	}
+}
