@@ -1,0 +1,87 @@
+
+class Node{
+    int data;
+    Node next;
+    Node(int data){
+        this.data=data;
+    }
+
+ }
+ class LLstack{
+   Node top;
+   int size;
+  
+    LLstack(){
+        this.top=null;
+        this.size=0;
+    }
+    
+    public void push(int data){
+        size++;
+        Node add=new Node(data);
+        if(top==null){
+            top=add;
+            return;
+        }
+        add.next=top;
+        top=add;
+    }
+    public int pop(){
+        size--;
+        if(top==null){
+            System.out.println("Stack UnderFlow Exception");
+            size=0;
+            return -1;
+        }
+        int value=top.data;
+        top=top.next;
+        return value;
+    }
+    public void display(){
+        Node temp=top;
+        while(temp!=null){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+        System.out.println();
+    }
+}
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+    LLstack first=new LLstack();
+    first.push(20);
+    first.push(40);
+    first.push(60);
+    first.push(80);
+    first.push(100);
+    first.push(120);
+    first.display();
+    System.out.println(" pop start");
+    System.out.println(first.pop()); 
+    first.display();
+    System.out.println(" second stack start");
+    LLstack first2=new LLstack();
+    first2.push(20);
+    first2.push(40);
+    first2.push(60);
+    first2.push(80);
+    first2.push(100);
+    first2.push(120);
+    first2.display();
+    System.out.println(" pop start");
+    System.out.println(first2.pop()); 
+    first2.display();
+    System.out.println(first2.pop()); 
+    System.out.println(first2.pop()); 
+    System.out.println(first2.pop()); 
+    System.out.println(first2.pop()); 
+    System.out.println(first2.pop()); 
+    System.out.println(first2.pop()); 
+    
+    System.out.println(first2.size); 
+}
+}
