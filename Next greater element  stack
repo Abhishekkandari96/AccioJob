@@ -1,0 +1,187 @@
+//**********************************************************************************************************************************************************
+Next Greater Element
+Given an array arr of size n of non-zero positive integers, the task is to find the next greater element for each element of the array in order of their appearance in the array.
+
+Next greater element of an element in the array is the nearest element on the right which is greater than the current element.
+
+If there does not exist next greater of current element, then next greater element for current element is -1. For example, next greater of the last element is always -1.
+
+Input Format
+Line 1: contains an integer n denoting size of array.
+
+Line 2: contains n spaced integers denoting elements of array.
+
+Output Format
+Returns a list of integers of length n denoting the next greater elements for all the corresponding elements in the input array.
+
+Example 1
+Input
+
+4
+1 3 2 4
+Output
+
+3 4 4 -1
+Explanation
+
+In the array, the next larger element to 1 is 3 , 3 is 4 , 2 is 4 and for 4 ? since it doesn't exist, it is -1.
+
+Example 2
+Input
+
+5
+6 8 0 1 3
+Output
+
+8 -1 1 3 -1
+Explanation
+
+In the array, the next larger element to 6 is 8, for 8 there is no larger elements hence it is -1, for 0 it is 1 , for 1 it is 3 and then for 3 there is no larger element on right and hence -1.
+
+Expected Time Complexity: O(N)
+
+Expected Space Complexity: O(N)
+
+Constraints
+1<=n<=10^6
+
+1<=arr[i]<=10^18
+
+
+//****************************************************method 1******************************************************************************************************
+//sc=O(1)
+//tc=O(n)
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Solution
+{
+    public static long[] nextLargerElement(long[] arr, int n)
+    { 
+        //Write code here and print output
+		Stack<Long> stk=new Stack<>();
+		for(int i=n-1;i>=0;i--){
+			long p=arr[i];
+			if(stk.size()==0){
+				arr[i]=-1;
+			}
+			else{
+				while(stk.size()!=0 && stk.peek()<=arr[i]){
+					stk.pop();
+				}
+				if(stk.size()==0){
+					arr[i]=-1;
+				}else{
+					arr[i]=stk.peek();
+				}
+			}
+			stk.push(p);
+		}
+		return arr;
+    } 
+}
+class Main {
+    public static void main (String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		    int n = Integer.parseInt(br.readLine().trim());
+		    String inputLine[] = br.readLine().trim().split(" ");
+		    long[] arr = new long[n];
+		    for(int i=0; i<n; i++)arr[i]=Long.parseLong(inputLine[i]);
+		    long[] res = new Solution().nextLargerElement(arr, n);
+		    for (int i = 0; i < n; i++) 
+		        System.out.print(res[i] + " ");
+		    System.out.println();
+	}
+}
+
+//*************************************************************************method 2*********************************************************************
+//sc=O(n)
+//tc=O(n)
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Solution {
+    Approach 1 : TC: O(N), SC: O(N)
+    public static long[] nextLargerElement(long[] arr, int n) {
+        // Write code here and print output
+        long[] nger = new long[n];
+        Stack<Long> st = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (st.size() == 0) {
+                nger[i] = -1;
+            } else {
+                while (st.size() > 0 && st.peek() <= arr[i]) {
+                    st.pop();
+                }
+
+                if (st.size() == 0) {
+                    nger[i] = -1;
+                } else {
+                    nger[i] = st.peek();
+                }
+            }
+
+            st.push(arr[i]);
+        }
+
+        return nger;
+    }
+}
+class Main {
+    public static void main (String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		    int n = Integer.parseInt(br.readLine().trim());
+		    String inputLine[] = br.readLine().trim().split(" ");
+		    long[] arr = new long[n];
+		    for(int i=0; i<n; i++)arr[i]=Long.parseLong(inputLine[i]);
+		    long[] res = new Solution().nextLargerElement(arr, n);
+		    for (int i = 0; i < n; i++) 
+		        System.out.print(res[i] + " ");
+		    System.out.println();
+	}
+}
+//***************************************************************method 3*********************************************************************************
+//sc=O(1)
+//tc=O(n)
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Solution {
+  
+    public static long[] nextLargerElement(long[] arr, int n) {
+		Stack<Integer> stk=new Stack<>();
+		for(int i=0;i<arr.length;i++){
+			while(stk.size()>0 && arr[i]>arr[stk.peek()]){
+				int p=stk.pop();
+				arr[p]=arr[i];
+			}
+			stk.push(i);
+		}
+		while(stk.size()>0){
+			int p=stk.pop();
+			arr[p]=-1;
+		}
+        return arr;
+    }
+}
+class Main {
+    public static void main (String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		    int n = Integer.parseInt(br.readLine().trim());
+		    String inputLine[] = br.readLine().trim().split(" ");
+		    long[] arr = new long[n];
+		    for(int i=0; i<n; i++)arr[i]=Long.parseLong(inputLine[i]);
+		    long[] res = new Solution().nextLargerElement(arr, n);
+		    for (int i = 0; i < n; i++) 
+		        System.out.print(res[i] + " ");
+		    System.out.println();
+	}
+}
