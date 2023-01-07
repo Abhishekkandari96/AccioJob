@@ -1,0 +1,160 @@
+//##########################################################################################################################################################
+Shuffle Decks
+You are given a deck of N cards. You have to shuffle the cards to play a game. To do so you divide the deck into two parts from the middle.
+
+If there are odd number of cards the middle card goes to the first part.
+
+Now to shuffle the deck, you pick cards alternatively from the two parts. You pick cards from the top of the first part, and the bottom of the second part, until both parts become empty.
+
+You need to return the final order in which the cards end up.
+
+You are given the original deck in the form of a linked list, where each card is represented by a node.
+
+Note: You need to only complete the function. The input and output would be handled by the driver code.
+
+Input Format
+The first line of input contains N representing the number of cards.
+
+The second line of input contains N space seperated integers, representing the cards of the deck.
+
+Output Format
+Return the head of the shuffled deck.
+
+Example 1
+Input
+
+4
+1 2 3 4
+Output
+
+1 4 2 3
+Explanation
+
+The given deck is 1->2->3->4
+
+We divide to get 1->2 and 3->4
+
+Pick card from top of deck 1 to get 1. Pick card from bottom of deck 2 to get 1->4.
+
+Pick card from top of deck 1 to get 1->4->2. Pick card from bottom of deck 2 to get 1->4->2->3.
+
+Example 2
+Input
+
+4
+1 2 3 4 5
+Output
+
+1 5 2 4 3
+Explanation
+
+The given deck is 1->2->3->4->5
+
+We divide to get 1->2->3 and 4->5
+
+Pick card from top of deck 1 to get 1. Pick card from bottom of deck 2 to get 1->5.
+
+Pick card from top of deck 1 to get 1->5->2. Pick card from bottom of deck 2 to get 1->5->2->4.
+
+Pick card from top of deck 1 to get 1->5->2->4->3.
+
+Constraints
+1 <= N <= 10000
+
+1 <= A[i] <= 100000
+
+
+//###########################################################################################################################################################3
+
+import java.util.*;
+import java.lang.*;
+
+class Node{
+    int data;
+    Node next;
+    Node(int key){
+        data = key;
+        next = null;
+    }
+}
+
+class Main{
+    static Node head;
+    static Node temp;
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int a1 = sc.nextInt();
+		head = null;
+		temp = null;
+		addToTheLast(a1);
+		
+		for(int i = 1; i < n; i++){
+			int data = sc.nextInt();
+			addToTheLast(data);
+		}
+		Solution ans = new Solution();
+		Node node = ans.shuffleDeck(head);
+		printList(node);
+		System.out.println();
+    }
+    
+    public static void addToTheLast(int data){
+        if(head == null){
+			head = new Node(data);
+			temp =head;
+			return ;
+		}
+		else{
+			Node new_node = new Node(data);
+			temp.next = new_node;
+			temp=temp.next;
+			return;		
+		}
+    }
+    
+    public static void printList(Node node){
+        while(node != null){
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+    }
+}
+
+class Solution{
+
+    public static Node shuffleDeck(Node node){
+      Node slow=node;
+		Node fast=node;
+		while(fast!=null&&fast.next!=null){
+			slow=slow.next;
+			fast=fast.next.next;
+		}
+		Node first=node;
+		Node second=reverse(slow.next);
+		slow.next=null;
+		while(second!=null){
+			Node temp1=first.next;
+			Node temp2=second.next;
+			first.next=second;
+			second.next=temp1;
+			first=temp1;
+			second=temp2;
+			
+		}
+		return node;
+    }
+	public static Node reverse(Node head){
+		Node curr=head;
+		Node follow=head;
+		Node pre=null;
+		while(curr!=null){
+			follow=follow.next;
+			curr.next=pre;
+			pre=curr;
+			curr=follow;
+		}
+		return pre;
+	}
+}
+
