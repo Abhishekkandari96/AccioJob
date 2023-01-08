@@ -1,0 +1,31 @@
+import java.util.*;
+public class Main
+{
+    public static int[] ngetl(int arr[]){
+        Stack<Integer> stk=new Stack<>();
+        int ngetl[]=new int[arr.length];
+        for(int i=arr.length-1;i>=0;i--){
+            
+            if(stk.size()==0){
+                stk.push(i);
+            }
+            else{
+                while(stk.size()>0 && arr[i]>arr[stk.peek()]){
+                    
+                    int pop=stk.pop();
+                    ngetl[pop]=i;
+                }
+                stk.push(i);
+            }
+            
+        }
+        while(stk.size()>0){
+            ngetl[stk.pop()]=-1;
+        }
+        return ngetl;
+    }
+	public static void main(String[] args) {
+		int arr[]={100,80,60,70,60,75,85};
+		System.out.println(Arrays.toString(ngetl(arr)));
+	}
+}
