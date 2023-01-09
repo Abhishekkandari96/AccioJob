@@ -1,0 +1,56 @@
+//*****************************
+Reverse String Using Stack
+You are given a string s, the task is to reverse the string using stack.
+
+Input Format
+line 1: contains a string s.
+
+Output Format
+Return a resulting string that is the reverse of the original string.
+
+Example 1
+Input
+
+abcd
+Output
+
+dcba
+Example 2
+Input
+
+abcde
+Output
+
+edcba
+Constraints
+1<=s.length()<=1000
+
+Topic Tags
+
+//*******************************
+import java.util.*;
+
+class Accio{
+    static String reverseStringStack(String str){
+        Stack<Character> stk=new Stack<>();
+       String out="";
+    for(int i=0;i<str.length();i++){
+            stk.push(str.charAt(i));      
+    }
+		while(stk.size()>0){
+			 out=out+stk.pop();
+		}
+    
+    return out;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Throwable {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        Accio obj = new Accio();
+        String ans = obj.reverseStringStack(s);
+        System.out.println(ans);
+    }
+}
