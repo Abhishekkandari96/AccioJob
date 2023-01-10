@@ -1,0 +1,65 @@
+//***********************************************
+Reverse Integer
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+Input Format
+The first line of input contains the integer n.
+
+Output Format
+Print the integer n in reverse if it lies within the range, else print 0.
+
+Example 1
+Input
+321
+Output
+123
+Example 2
+Input
+-321
+Output
+-123
+Example 3
+Input
+120
+Output
+21
+Constraints
+-2^31 <= x <= 2^31 - 1
+Topic Tag
+
+//***********************************************
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class Solution{
+    public int reverseInteger(int x) {
+        // write code here
+		int num=0;
+		while(x!=0){
+			int lastDigit=x%10;
+			//handling overflow conditon
+			if(num>Integer.MAX_VALUE/10 || num==Integer.MAX_VALUE/10 && lastDigit>7) return 0 ;//positive number
+			if(num<Integer.MIN_VALUE/10 || num==Integer.MIN_VALUE/10 && lastDigit<-8) return 0 ;//negative number
+		    num=num*10+lastDigit;
+			x=x/10;
+		
+		}
+		return num;
+    }
+}
+
+public class Main {
+	
+  public static void main (String[] args)
+	{
+		Scanner sc = new Scanner(System.in);
+	    	int x = sc.nextInt();
+            Solution obj = new Solution();
+			System.out.println(obj.reverseInteger(x));
+	    	
+		
+	}
+}
