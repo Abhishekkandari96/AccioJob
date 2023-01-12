@@ -1,0 +1,88 @@
+//*****************************************
+Find All Duplicates in an Array
+Given an integer array nums of length n where all the integers of nums are in the range [1, n] and each integer appears once or twice.
+
+Return an array of all the integers that appears twice.
+
+You must write an algorithm that runs in O(n) time and uses only constant extra space."
+
+Input Format
+The first line contains a single integer n (size of the array)
+
+Second line contains n-spaced integers representing the array
+
+Output Format
+Print all the elements that appear twice in a sorted manner
+
+Example 1
+Input
+
+8
+4 3 2 7 8 2 3 1
+Output
+
+2 3
+Explanation
+
+2 and 3 are only the elements that are repeated twice
+
+Example 2
+Input
+
+3
+1 1 2
+Output
+
+1
+Explanation
+
+Only 1 is repeated twice
+
+Constraints
+1 <= n <= 10^5
+
+0 <= arr[i] <= 10^9
+
+Topic 
+//*****************************************
+import java.util.*;
+
+class Solution {
+    public void allDuplicates(int n, int[] temp) {
+        // Write Your code here.
+		Map<Integer,Integer> hm=new TreeMap<>();
+	
+		int count=1;
+		for(int i=0;i<n;i++){
+			if(hm.get(temp[i])==null){
+			hm.put(temp[i],count);
+			}
+			else{
+				hm.put(temp[i],hm.get(temp[i])+1);
+			}	
+		}
+		Set<Integer> keys=hm.keySet();
+		for(Integer i: keys){
+			if(hm.get(i)==2){
+				System.out.print(i+" ");
+			}
+		
+		}
+		}
+		
+		
+    
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        Solution Obj = new Solution();
+        Obj.allDuplicates(n, arr);
+        sc.close();
+    }
+}
