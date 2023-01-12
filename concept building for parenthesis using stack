@@ -1,0 +1,163 @@
+
+//************************************************
+Balanced Brackets
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is Balanced if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Input Format
+The first line contains a single integer n(Length of the string)
+
+The second line contains string s
+
+Output Format
+Print YES is brackets are balanced otherwise print NO
+
+Example 1
+Input
+
+2
+()
+Output
+
+YES
+Explanation As ( was closed with ) therefore output isYES
+
+Example 2
+Input
+
+2
+(]
+Output
+
+NO
+Explanation The bracket ( was not closed, Therefore output is NO
+
+Constraints
+1 <= s.length <= 104
+s consists of parentheses only '()[]{}'
+Topic Tags
+
+//***************************************************
+import java.util.*;
+
+class Solution{
+    public void balancedBrackets(String str, int n) {
+        // write code here
+        Stack <Character> stk=new Stack<>();
+        
+        for(int i=0;i<str.length();i++){
+            if(stk.size()==0){
+                System.out.println("empty");
+            }
+            else{
+                System.out.println("not empty=>"+stk);
+            }
+           if(str.charAt(i)=='('||str.charAt(i)=='['||str.charAt(i)=='{'){
+               stk.push(str.charAt(i));
+           }
+           else{
+              
+               if(str.charAt(i)==')'){
+                   if(stk.size()==0){
+                       System.out.println("no");
+                       return;
+                   }
+                   else if(stk.peek()!='('){
+                      System.out.println("no");
+                       return; 
+                   }
+                   stk.pop();
+                   
+               }
+               if(str.charAt(i)==']'){
+                    if(stk.size()==0){
+                       System.out.println("no");
+                       return;
+                   }
+                   
+                   else if(stk.peek()!='['){
+                      System.out.println("no");
+                       return; 
+                   }
+                   stk.pop();
+               }
+               if(str.charAt(i)=='}'){
+                    if(stk.size()==0){
+                       System.out.println("no");
+                       return;
+                   }
+                   else if(stk.peek()!='{'){
+                      System.out.println("no");
+                       return; 
+                   }
+                   stk.pop();
+               }
+           }
+          
+        }
+        System.out.println("out");
+         System.out.println(stk);
+         if(stk.size()==0){
+        System.out.println("yes");
+         }
+         else{
+             System.out.println("no");
+         }
+    }
+}
+//{(){}[()]}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        String s = sc.next();
+        Solution Obj = new Solution();
+        Obj.balancedBrackets(s, n);
+    }
+}
+
+
+//***********************************************i/p  o/p*****************************************************
+i/p
+10
+{(){}[()]}
+o/p->
+empty
+not empty=>[{]
+not empty=>[{, (]
+not empty=>[{]
+not empty=>[{, {]
+not empty=>[{]
+not empty=>[{, []
+not empty=>[{, [, (]
+not empty=>[{, []
+not empty=>[{]
+out
+[]
+yes
+
+
+i/p=
+10
+{(){([()]}
+o/p=
+empty
+not empty=>[{]
+not empty=>[{, (]
+not empty=>[{]
+not empty=>[{, {]
+not empty=>[{, {, (]
+not empty=>[{, {, (, []
+not empty=>[{, {, (, [, (]
+not empty=>[{, {, (, []
+not empty=>[{, {, (]
+no
+
+i/p=10
+}(){([()]}
+o/p=
+empty
+no

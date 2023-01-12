@@ -1,0 +1,130 @@
+//*******************************************************
+Queue using Linked List
+You have to implement Queue data structure using a LinkedList. Complete the given class Queue containing the following functionalities
+
+Push(int x): Inserts an integer x in the queue
+
+Pop(): Removes the element at the front of the queue and returns it
+
+Front(); Returns the element at front of the queue
+
+Size(): Returns the number of elements in the queue
+
+Input Format
+First line contains an integer n, which is the number of operations
+
+Each line i of the n subsequent lines (where 0<=i<n ) defines an operation to be performed. Each operation starts with a single integer, op (where op belongs to {1, 2, 3, 4} ), denoting a type of operation as defined in the Problem Statement above. If the operation requires an argument, op is followed by its space-separated argument. For example, if op = 1, and integer to be pushed if 4, then line i will be 1 4.
+
+Output Format
+Complete the functions and return the required numbers accordingly
+
+Example 1
+Input
+
+8
+1 1
+1 2
+1 3
+1 4
+3
+2
+3
+4
+Output
+
+1
+1
+2
+3
+Explanation
+
+We have n = 8, so there are 8 operations to be performed
+
+op = 1, Push(1), queue = {1}
+op = 1, Push(2), queue = {1,2}
+op = 1, Push(3), queue = {1,2,3}
+op = 1, Push(4), queue = {1,2,3,4}
+op = 3, Front(), print 1
+op = 2, Pop(), queue = {2,3,4}, print 1
+op = 3, Front(), print 2
+op = 4, Size(), print 3
+Constraints
+There will be at max 1000 elements in the queue
+
+op = {1,2,3,4}
+
+Topic Tags
+
+
+
+//********************************************************
+import java.util.*;
+
+class Queue {
+	class Node {
+		int data;
+		Node next;
+		Node(int data){
+			this.data=data;
+			this.next=null;
+		}
+	}
+    Node front=null;
+	Node last=null;
+	int count=0;
+    public void push(int value) {
+		Node push=new Node(value);
+        if(front==null){
+			front=push;
+			last=push;
+			count++;
+			return;
+		}
+		last.next=push;
+		last=push;
+		count++;
+    }
+    public int pop() {
+		if(getSize()==0){
+			return -1;
+		}
+        int data=front.data;
+		front=front.next;
+		count--;
+		return data;
+		
+    }
+    public int front() {
+        //Write your code here
+		 if(front==null) return -1;
+		int data=front.data;
+		return data;
+    }
+    public int getSize() {
+        //Write your code here
+		
+		return count;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Queue q = new Queue();
+        int n = sc.nextInt();
+        for(int i = 0; i < n; i++) {
+            int op = sc.nextInt();
+            if(op == 1) {
+                int x = sc.nextInt();
+                q.push(x);
+            }
+            else if(op == 2) {
+                System.out.println(q.pop());
+            }
+            else if(op == 3)
+                System.out.println(q.front());
+            else if(op == 4)
+                System.out.println(q.getSize());
+        }
+    }
+}

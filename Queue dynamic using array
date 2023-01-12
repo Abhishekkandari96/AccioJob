@@ -1,0 +1,92 @@
+import java.util.*;
+class Queue{
+    int[] arr;
+    int push=0;
+    int pop=0;
+    int size=0;
+    Queue(int cap){
+        this.arr=new int[cap+1];
+    }
+    public int size(){
+        return size;
+    }
+    public void push(int data){
+        if(size()==arr.length){
+        int[] newA=new int[2*size()];
+        
+        int idx=pop;
+        for(int j=0;j<size();j++){
+            newA[j]=arr[idx];
+            idx=(idx+1)%arr.length;
+        }
+        arr=newA;
+        pop=0;
+        push=size();
+        }
+        arr[push]=data;
+        push=(push+1)%arr.length;
+        size++;
+    }
+    public int pop(){
+        if(size()==0){
+            System.out.println("Queue underFlow Exception");
+            return -1;
+        }
+        int value=arr[pop];
+        pop=(pop+1)%arr.length;
+        size--;
+        return value; 
+    }
+    public int peek(){
+        if(size()==0){
+            System.out.println("empty Queue");
+            return -1;
+        }
+        return arr[pop];
+    }
+    public void display(){
+        int idx=pop;
+        for(int i=0;i<size();i++){
+            System.out.print(arr[idx]+" ");
+            idx=(idx+1)%arr.length;
+        }
+        System.out.println();
+    }
+}
+public class Main
+{
+	public static void main(String[] args) {
+
+    Queue q1=new Queue(4);
+    q1.push(10);
+     q1.push(20);
+      q1.push(30);
+       q1.push(40);
+        q1.push(50);
+       System.out.println(q1.size());
+       q1.display();
+       q1.pop();
+       q1.pop();
+      q1.push(90);
+      q1.display();
+      System.out.println(q1.peek());
+      System.out.println("next Queue");
+    Queue q2=new Queue(4);
+    q2.push(100);
+     q2.push(200);
+      q2.push(300);
+       q2.push(400);
+        q2.push(500);
+        q2.push(600);
+        q2.push(700);
+        q2.push(800);
+        q2.push(900);
+        q2.push(1000);
+        q2.push(2000);
+        q2.push(3000);
+       System.out.println(q2.size());
+       q2.display();
+      System.out.println(q2.peek());
+       
+	}
+}
