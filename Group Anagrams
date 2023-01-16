@@ -1,0 +1,104 @@
+//**************************************
+Group Anagrams
+Given an array of words, print all anagrams together. For example, if the given array is {“cat”, “dog”, “tac”, “god”, “act”}, then output may be “cat tac act dog god”.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Print the anagrams of the words in the order it appeared in the array.
+
+For example: cat appears first, so print cat first and print the remaining anagrams in the order of appearance in the array. So cat -> tac -> act. Then print dog and the anagrams of dog ie. god.
+
+Input Format
+Input consists of 2 lines.
+
+1st line contains the number of elements followed by n Strings.
+
+Output Format
+Print the anagrams together in the same line.
+
+Example1
+Input
+
+5
+cat dog tac god act
+Output
+
+cat tac act dog god
+Explanation
+
+cat, tac and act are anagrams of each other.
+
+dog and god are anagrams of each other.
+
+Example 2
+Input
+
+6
+eat tea tan ate nat bat
+Output
+
+bat eat tea ate tan nat
+Explanation
+
+bat exists singularly.
+
+eat, tea and ate are anagrams of each other.
+
+tan and nat are anagrams of each other.
+
+Constraints
+1 <= strs.length <= 200
+
+0 <= strs[i].length <= 100
+
+strs[i] consists of lowercase English letters.
+
+Topic Tags
+//**************************************
+
+// A Java program to print all anagrams together
+import java.util.*;
+
+public class Main {
+    // Given a list of words in wordArr[],
+    static void printAnagramsTogether(String wordArr[],int size) {
+        //your code here
+		Map<String,ArrayList<String>> hm=new TreeMap<>();
+		for(String str:wordArr){
+			//create array of char
+			char crr[]=new char[str.length()];
+			for(int i=0;i<str.length();i++){
+				crr[i]=str.charAt(i);
+			}
+			Arrays.sort(crr);
+			String temp=new String(crr);
+			ArrayList<String> tempStr=hm.getOrDefault(temp, new ArrayList<String>());
+			tempStr.add(str);
+			hm.put(temp,tempStr);
+			
+		}
+//	System.out.println(hm);
+		StringBuilder sb=new StringBuilder();
+		for(String list :hm.keySet()){
+		  //  System.out.print((hm.get(list)+" "));
+			ArrayList<String> help=hm.get(list);
+			for(int i=0;i<help.size();i++){
+				sb.append(help.get(i)+" ");
+			}
+		}
+		System.out.println(sb.toString());
+		
+		
+    }
+
+    // Driver program to test above functions
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        String[] wordArr = new String[n];
+        for (int i = 0; i < n; i++)
+            wordArr[i] = sc.next();
+        sc.close();
+        printAnagramsTogether(wordArr, n);
+    }
+}
