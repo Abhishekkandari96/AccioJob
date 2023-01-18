@@ -1,0 +1,85 @@
+//************************
+Square root of a number
+Given an integer x, find the square root of x.
+
+If x is not a perfect square, then return floor(√x).
+
+Expected Time Complexity: O(log N)
+Expected Auxiliary Space: O(1)
+
+Note: Try Solving the question without using sqrt Function.
+
+Input Format
+The only line contains an integer x.
+
+Output Format
+Print the square root of x.
+
+Example 1
+Input
+
+5
+Output
+
+2
+Explanation
+
+Since, 5 is not a perfect square, floor of square root of 5 is 2.
+
+Constraints
+1 ≤ x ≤ 10^7
+Topic Tags
+//***************************
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Main {
+	// approach-- binary search(used),linear search
+	/*
+ tc=sqrt(n);
+ condition extraction
+ initialise:
+ start= 1;
+ end=n
+ while(start<=end)
+ conditions;
+ if mid*mid==n--> return mid;
+ if mid*mid>n--> end=mid-1;
+  note above two condition will handle perfect square case, but for non perfect
+  we will find closest min;
+	*/
+    public static void sqrt(int A) {
+        // your code here
+		long start=1;
+	    long end=(long)A;
+		long sqrt=0;
+		while(start<=end){
+			long mid=(start+end)/2;
+			
+			if(mid*mid==A){
+				sqrt=mid;
+				break;
+			}
+			else if(mid*mid>A){
+				end=mid-1;
+			}
+			else{
+				sqrt=mid;
+				start=mid+1;
+			}
+		}
+		System.out.println(sqrt);
+		
+    }
+
+  public static void main (String[] args)
+	{
+    Scanner sc = new Scanner(System.in);
+	    
+	  int A = sc.nextInt();
+	  
+    sqrt(A);
+		
+	}
+}
