@@ -1,0 +1,146 @@
+//******************************
+Allocate Minimum Number Of Pages
+You are given N number of books. Every ith book has A[i] number of pages.
+
+You have to allocate contagious books to M number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value.
+
+Each book will be allocated to exactly one student. Each student has to be allocated at least one book
+
+Input Format
+First line contains a two integers N denoting number of books and M number of students
+
+Second Line contains N integers where ith integer denotes number pages in ith book
+
+Output Format
+Print minimum value of maximum number of pages allocated to any one student
+
+Example 1
+Input
+
+4 2
+12 34 67 90
+Output
+
+113
+Explanation
+
+Allocation can be done in following ways: {12} and {34, 67, 90} Maximum Pages = 191
+
+{12, 34} and {67, 90} Maximum Pages = 157 {12, 34, 67} and {90}  Maximum Pages =113
+
+Therefore, the minimum of these cases is 113, which is selected as the output.
+
+Constraints
+1 <= N <= 100000
+
+1 <= A[i] <= 1000000
+
+1 <= M <= 100000
+
+Topic Tags
+//******************************
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Solution {
+    /*
+    approach-
+    step 1.-if no of students aare more then no of books, return -1;
+    step 2-find sample space =starting :-maximum no of pages a student from set of a student get if student is equal to length of array(maximum of all book will be high)
+                            ending:-maximum no of pages to a students if total students are only one (all book to one thus total pages is the sum of all )
+    step 3- allocate a variable to store ans;
+    step 4- binary search
+             conditions-
+             step(a)-make a function named as possibleOrNot()
+                     =>this will return true based on if book is distributable to a students or not inside the range
+                     step(i)-initialise no of student=1;sum of pages =0;
+                     step (ii)-inside loop
+                              condition;
+                              1-sum of sumofpages and curret pages less then equal to maxCapacity ,then increment sumofpages
+                              2-if above is not true, then,increment student, and assign sumofpages to current page
+                     step(iii)- if student are less then no of total student return true, else false
+                      
+                                                
+             step(b)-if(possibleOrNot==true)=>allocateans =mid; and search for smaller ans possible in lhs;
+             if(possibleOrNot==false)=> search in rhs ,as current capacity is less
+    step 5=come out of loop and return alloacteans;
+                            
+    */
+    public boolean possibleOrNot(int arr[],int noOfStudents, long maxCapacity){
+        int student=1;
+        long sumOfPages=0;
+        for(int i=0;i<arr.length;i++){
+            
+            if(sumOfPages+arr[i]<=maxCapacity){
+                sumOfPages+=arr[i];
+            }
+            else{
+                student++;
+                sumOfPages=arr[i];
+            }
+        }
+        if(student<=noOfStudents){
+            return true;
+        }
+        return false;
+        
+    }
+    public long MinimumPages(int[] arr, int B) {
+        //step.1-if no of students are more then no of books;
+        if(B>arr.length){
+            return -1;
+        }
+        //step 2-find sample space;
+        long low=0;
+        long high=0;
+        for(int i=0;i<arr.length;i++){
+            //if no of students are only one then maximum no of pages to a particular dtudent is summ of all pages of all book;
+            high=high+arr[i];
+            //if no of student are equal tto no of book, then, max pages is equal to book having max pages
+            low=Math.max(low,arr[i]);
+            
+        }
+       //step 3- allocate a variable to store ans;
+       long ans=0;
+      // step 4- binary search
+      while(low<=high){
+          long mid=(low+high)/2;
+          
+          //if true, division is possible within range
+          if(possibleOrNot(arr,B,mid)){
+              //allocate ans;
+              ans=mid;
+              //search for further smaller ans in lhs
+              high=mid-1;
+              
+          }
+          // if not possible
+          else{
+              //increase the range to rhs
+              low=mid+1;
+              
+          }
+      }
+      return ans;
+       
+        
+    }
+}
+
+class Main {
+    
+
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+	    
+	    int N = sc.nextInt();
+	    int B = sc.nextInt();
+        int[] A = new int[N];
+        for(int i=0;i<N;i++)
+            A[i] = sc.nextInt();
+
+        Solution Obj = new Solution(); 
+        System.out.println(Obj.MinimumPages(A,B));
+	}
+}
