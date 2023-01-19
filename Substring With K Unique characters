@@ -1,0 +1,121 @@
+//*****************************
+Substring With K Unique characters
+You are given a string 's'.
+
+You need to print length of longest possible substring that has exactly k unique characters. If there is no such string print -1.
+
+Input Format
+First line contains two integers n and k, denoting the length of string and value of k respectively.
+
+Second line contains a string s.
+
+Output Format
+Print an integer indicating the length of substring. If not possible print -1.
+
+Example 1
+Input
+
+6 1
+aabbcc
+Output
+
+2
+Explanation
+
+Max substring can be any one from {“aa” , “bb” , “cc”}.
+Example 2
+Input
+
+6 2
+aabbcc
+Output
+
+4
+Explanation
+
+Max substring can be any one from {“aabb” , “bbcc”}
+Constraints
+1<=|s|<=10^5
+1<=k<=10^5
+
+Topic Tags
+//******************************
+import java.util.*;
+
+public class Main {
+	 /*
+    approach-
+    1)-frequency array
+    2)-hashMap;
+    using frequency array
+    step 1- assign two pointer 
+    expand=0;
+    contract=0;
+    step-2 declare a potential ans variable
+    step 3-declare unqiue as =0; which represent unique element count
+    step 4=loop start
+            (1)-expention;
+                    (a)-include it into frequency array;
+                    (b)-if it is first of his type incremenet count
+			(2)-work/calculate;
+            (3)-contraction;
+                    (a)-condition: while(contraction<expand && count>k),then do exclusion of start, and decrese frequency of that char till count became equal to k 
+                    
+            
+ 
+    */
+
+    public static int longestkSubstr(int n, int k,String str){
+		 //making frequency array
+        int freq[]=new int[26];
+        //declare two pointers
+        int expand=0;
+        int contract=0;
+        //declaring potential ans;
+        int potentialAns=-1;
+        //declare a variable to count unique char so far;
+        int count=0;
+        while(expand<str.length()){
+            
+            //step 1-expand
+            freq[str.charAt(expand)-'a']++;
+            if(freq[str.charAt(expand)-'a']==1){
+                //increment unique count
+                count++;
+            }
+            expand++;
+            //else count will remain same
+            
+             //step2=work/calculate;
+            
+            if(count==k){
+                potentialAns=Math.max(potentialAns,expand-contract);
+            }
+            
+            //step 3-contraction
+            while(contract<expand && count>k){
+                //exclude the char at contract and decrease iyt freq;
+                freq[str.charAt(contract)-'a']--;
+                //check is freq of char at contract ==0, if it became zero , then decrease count
+                if(freq[str.charAt(contract)-'a']==0){
+                    count--;
+                }
+                contract++;
+            }
+            
+           
+            
+        }
+        
+        return potentialAns;
+    }
+
+    public static void main(String[] args) throws Throwable {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        String s = sc.next();
+        int ans = longestkSubstr(n,k,s);
+        System.out.println(ans);
+    }
+}
