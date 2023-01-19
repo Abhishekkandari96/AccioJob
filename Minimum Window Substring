@@ -1,0 +1,146 @@
+//***********************
+Minimum Window Substring
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+
+The testcases will be generated such that the answer is unique.
+
+Input Format
+First line of input denotes string s
+
+Second line of input denotes string t
+
+Output Format
+You have to return minimum window substring
+
+Example 1
+Input
+
+ADOBECODEBANC
+ABC
+Output
+
+BANC
+Explanation
+
+The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+
+Example 2
+Input
+
+a
+a
+Output
+
+a
+Explanation
+
+The entire string s is the minimum window.
+
+Constraints
+1 <= s.length, t.length <= 1e5
+Topic Tags
+
+//***********************
+import java.io.*;
+import java.util.*;
+
+class Solution {
+	 /*
+    approach=
+    1-hashmap;
+    2-frequency array;
+            step.1= make frequency array of second
+            step.2= initialise contract, expand for itteration
+            step.3= initialise unique to count no of unique char;
+            step.4= initialise start and end for returnind minimum window unque char substring;
+            step.5= initialise freq array for first;
+            step.5=loop strt while(expand<str.length()){
+                        1= expand
+                        2= contract and calculation in same 
+                             (a)-while(contract<expand && isSatisfied(freq1,freq2)){
+                                (i) //finding min (minimum) and calculating start and end index of substring
+                                (ii) //checking is min is greater then current min(expand-contract) if true 
+                                               //ininitialise min as new min
+                                               //update startidx
+                                               //update end index
+                                (iii)//decrease frequency
+                             (b)-checking if freq became zero reduce the unique char count
+                             (c)-reduce window by increasing contract
+            step.6= if no substring(min==maxVAlue) found return empty string else return substring from start index to end index
+    */
+    public  boolean  isSatisfied(int freq1[],int freq2[]){
+         for(int i=0;i<freq1.length;i++){
+             if(freq2[i]>freq1[i]) return false;
+         }
+         return true;
+    }
+	
+    public String minWindow(String str, String str2) {
+		//write code here
+		
+		int m=str2.length();
+		int n=str.length();
+        int []freqOfTest=new int[123];
+        for(int i=0;i<m;i++) 
+			freqOfTest[str2.charAt(i)]++;
+        int contract=0;
+        int expand=0;
+        int unique=0;
+        int startidx=0;
+        int endidx=0;
+        int min=Integer.MAX_VALUE;
+        int freqOfOriginal[]=new int[123];
+        while(expand<str.length()){
+            
+            //expand
+            freqOfOriginal[str.charAt(expand)]++;
+            if(freqOfOriginal[str.charAt(expand)]==1){
+                unique++;
+            }
+            expand++;
+            
+            //contract and calculation in same 
+            while(contract<expand && isSatisfied(freqOfOriginal,freqOfTest)){
+                //finding min (minimum) and calculating start and end index of substring
+                //checking is min is greater then current min if true
+                if(min>expand-contract){
+                    //ininitialise new min
+                    min=expand-contract;
+                    //update startidx
+                    startidx=contract;
+                    //update end index
+                    endidx=expand;
+                }
+                //decrease frequency
+                freqOfOriginal[str.charAt(contract)]--;
+                //checking if freq became zero reduce the unique char count
+                if(freqOfOriginal[str.charAt(contract)]==0){
+                    unique--;
+                }
+                //reduce window by increasing contract
+                contract++;
+                
+            }
+            
+        }
+        // if no substring found return empty string
+        if(min==Integer.MAX_VALUE){
+            return "";
+        }
+        //else return substring from start index to end index
+        return str.substring(startidx,endidx);
+			
+		
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s,t;
+        s = sc.next();
+		t = sc.next();
+        Solution Obj = new Solution();
+        System.out.print(Obj.minWindow(s,t));
+    }
+}
