@@ -1,0 +1,139 @@
+//***********************
+Minimum Limit of Balls in a Bag
+You are given an integer array nums where the ith bag contains nums[i] balls. You are also given an integer maxOperations.
+
+You can perform the following operation at most maxOperations times:
+
+Take any bag of balls and divide it into two new bags with a positive number of balls.
+
+For example, a bag of 5 balls can become two new bags of 1 and 4 balls, or two new bags of 2 and 3 balls.
+
+Your penalty is the maximum number of balls in a bag. You want to minimize your penalty after the operations.
+
+Print the minimum possible penalty after performing the operations.
+
+Input Format
+The first line of the input contains the number 𝑛(length of the array) and m(maximum number of operations).
+
+The next n integers denote the elements of the array.
+
+Output Format
+Print the minimum penalty possible after performing at most m operations.
+
+Example 1
+Input
+
+1 2
+9
+Output
+
+3 
+Explanation
+
+Divide the bag with 9 balls into two bags of sizes 6 and 3. [9] -> [6,3].
+
+Divide the bag with 6 balls into two bags of sizes 3 and 3. [6,3] -> [3,3,3].
+
+The bag with the most number of balls has 3 balls, so your penalty is 3 and you should return 3.
+
+Example 2
+Input
+
+4 4
+2 4 8 2
+Output
+
+2
+Explanation
+
+Divide the bag with 8 balls into two bags of sizes 4 and 4. [2,4,8,2] -> [2,4,4,4,2].
+
+Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,4,4,4,2] -> [2,2,2,4,4,2].
+
+Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,2,2,4,4,2] -> [2,2,2,2,2,4,2].
+
+Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,2,2,2,2,4,2] -> [2,2,2,2,2,2,2,2].
+
+The bag with the most number of balls has 2 balls, so your penalty is 2 an you should return 2.
+
+Constraints:
+1 <= nums.length <= 10^5
+
+1 <= maxOperations, nums[i] <= 10^9
+
+Topic Tags
+//***********************
+import java.util.*;
+import java.io.*;
+class Solution
+{
+	/*
+  ith bag contains nums[i] balls.
+   can perform the following operation at most maxOperations times
+  1-Take any bag of balls and divide it into two new bags with a positive number of balls.
+  2-Your penalty is the maximum number of balls in a bag. You want to minimize your penalty after the operations.
+  3-Print the minimum possible penalty after performing the operations.
+
+  approach-
+  step.1-find max possible penalty if operations are infinite=1(cannot be furter divide)
+  step.2-find max possible penalty if operations are zero=max of all
+  step.3-apply binar search
+           condition
+		   a-isPossible();
+  
+	*/
+	public static boolean isPossible(int[] arr, int mid, int operation){
+		 int currentOperation=0;
+        for(int i=0;i<arr.length;i++){
+			int currentBall=arr[i];
+			int divider=currentBall/mid;
+			if(currentBall%mid==0){
+				//decrease one divider;
+				divider--;
+			}
+			currentOperation+=divider;
+			
+		}
+		if(currentOperation<=operation){
+			return true;
+		}
+		return false;
+	}
+    public static int solve(int n,int m,int arr[])
+    {
+       
+		//step.1;
+		int low=1;
+		//step.2;
+		int high=0;
+		for(int i=0;i<n;i++){
+			high=Math.max(arr[i],high);
+		}
+		int possibleAns=-1;
+		//step.3;
+		while(low<=high){
+			int mid=(low+high)/2;
+			if(isPossible(arr,mid,m)){
+				possibleAns=mid;
+				//search for further smallest
+				high=mid-1;
+			}
+			else{
+				low=mid+1;
+			}
+		}
+		return possibleAns;
+		
+		
+    }
+}
+public class Main {
+    public static void main(String args[]) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt(), m = input.nextInt();
+        int[] arr;
+        arr= new int[n];
+        for(int i = 0; i < n; i++)arr[i]=input.nextInt();
+        System.out.println(Solution.solve(n,m,arr));
+    }
+}
