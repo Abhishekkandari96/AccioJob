@@ -1,0 +1,93 @@
+//*********************
+Floor And Ceil
+Given an sorted integer array arr of size n which contains unique elements, find the floor and ceil of a given key.
+
+If the key is present in array floor and ceil of that key is itself that number and if not then simply find its floor and ceil of the key in the array.
+
+Note
+
+If the ceiling/floor of the key is not present in the array return -1.
+
+Input Format
+First line contains two spaced integers the array size n and key
+
+Next line contains n spaced integers.
+
+Output Format
+Return an array containing floor and ceil of the given key and make sure you have floor first and then ceil in the result array.
+
+Example 1
+Input
+
+7 730
+43 210 723 730 832 838 997 
+Output
+
+730 730
+Explanation
+
+730 is present in the array so it's floor and ceil both are 730 and 730.
+
+Example 2
+Input
+
+10 1
+24 50 62 74 87 434 477 625 783 940 
+Output
+
+-1 24
+Explanation
+
+The floor of key 1 is not present in the array,so it's floor is -1 but it's ceiling according to our requirement is 24 which is in the array.
+
+Constraints
+1 <= n <= 10^5
+
+1 <= key <= 10^9
+
+1 <= arr[i] <= 10^9
+
+Topic Tags
+//*********************
+import java.util.*;
+
+public class Main {
+    public static int[] floorAndCeil(int key, int[] arr) {
+        //Write code here
+		int start=0;
+		int end=arr.length-1;
+		int floor=-1;
+		int ceil=-1;
+		while(start<=end){
+			int mid=(start+end)/2;
+			if(arr[mid]==key){
+				ceil=arr[mid];
+				floor=arr[mid];
+				break;
+			}
+			else if(arr[mid]>key){
+				ceil=arr[mid];
+				end=mid-1;
+			}
+			else{
+				floor=arr[mid];
+				start=mid+1;
+			}
+		}
+		int arr2[]= {floor,ceil};
+		return arr2;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n, key;
+        n = sc.nextInt();
+        key = sc.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        int[] result = floorAndCeil(key, arr);
+        System.out.println(result[0] + " " + result[1]);
+        sc.close();
+    }
+}
