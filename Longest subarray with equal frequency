@@ -1,0 +1,90 @@
+//************************
+Longest subarray with equal frequency
+An array is given to you which contains only 0s, 1s and 2s. Find the length of the longest possible subarray which has the frequency of all 0s, 1s and 2s equal.
+
+Input Format
+The first line of input contains an integer n denoting the number of elements in the array.
+
+The second line contains n space-separated integers representing the element of the array.
+
+Output Format
+A number representing the length of the longest subarray with an equal number of 0s, 1s, and 2s.
+
+Example 1
+Input
+
+7
+0 1 0 2 0 1 0
+Output
+
+3
+Explanation The subarray from index '1' to '3' is the longest subarray having equal number of 0's, 1's and 2's.
+
+Example 2
+Input
+
+6
+0 1 1 2 0 2
+Output
+
+6
+Explanation The whole array is the required array since it has equal number of 0's, 1's and 2's hence the answer is '6'.
+
+Constraints:
+1 <= n <= 10^5
+0 <= arr[i] <= 2
+
+Topic Tag
+//********************
+import java.util.*;
+
+class Solution{
+    public static int longestSubarray(int[] arr){
+        // write code here
+		HashMap<String,Integer> hm=new HashMap<>();
+		int freq_zero=0;
+		int freq_one=0;
+		int freq_two=0;
+		int fdOZ=freq_one-freq_zero;
+		int fdTO=freq_two-freq_one;
+		String firstKey=fdOZ+"#"+fdTO;
+		int length=0;
+		hm.put(firstKey,-1);
+		for(int i=0;i<arr.length;i++){
+			if(arr[i]==0){
+				freq_zero++;
+			}else if(arr[i]==1){
+				freq_one++;
+			}
+			else{
+				freq_two++;
+			}
+			 fdOZ=freq_one-freq_zero;
+		     fdTO=freq_two-freq_one;
+		     firstKey=fdOZ+"#"+fdTO;
+			if(hm.containsKey(firstKey)){
+			int current_length=i-hm.get(firstKey);
+			length=Math.max(current_length,length)	;
+			}else{
+				hm.put(firstKey,i);
+			}
+			
+		}
+		return length;
+		
+		
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scn.nextInt();
+        }
+        Solution Obj =  new Solution();
+        System.out.println(Obj.longestSubarray(arr));
+    }
+}
