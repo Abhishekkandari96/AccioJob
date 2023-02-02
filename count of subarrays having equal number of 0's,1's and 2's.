@@ -1,0 +1,75 @@
+//*****************
+
+Given an array arr of size n containing 0,1 and 2 only. Find the count of subarrays having equal number of 0's,1's and 2's.
+
+Input Format
+The First line of input contain an integer N denoting size of array.
+
+Second line contain N space separted random sequence of 0's,1's and 2's.
+
+Output Format
+Print the count of subarrays having equal number of 0's,1's and 2's.
+
+Example 1
+Input
+
+4
+2 0 1 2
+Output
+
+2
+Explanation
+
+the subarrays from index 0 to 2 and 1 to 3 have equal number of 0's,1's and 2's.
+
+Example 2
+Input
+
+3
+1 1 2
+Output
+
+0
+Explanation
+
+No such subarray is possible with equal number of 0's,1's and 2's.
+
+Constraints
+1 <= N <=10^6
+
+0 <= |arr[i]| <= 2
+
+Topic Tags
+//***************
+ static int countEqualSubarray012(int arr[], int n)
+    {
+        //Write your code here
+        HashMap<String,Integer> hm=new HashMap<>();
+		int count0=0;
+		int count1=0;
+		int count2=0;
+		int delta10=count1-count0;
+		int delta21=count2-count1;
+		String key=delta10+"#"+delta21;
+		hm.put(key,1);
+		int ans=0;
+		for(int i=0;i<n;i++){
+			if(arr[i]==0){
+				count0++;
+			}
+			else if(arr[i]==1){
+				count1++;
+			}
+			else{
+				count2++;
+			}
+		delta10=count1-count0;
+		delta21=count2-count1;
+		key=delta10+"#"+delta21;
+			if(hm.containsKey(key)){
+				ans=ans+hm.get(key);
+			}
+			hm.put(key,hm.getOrDefault(key,0)+1);
+		}
+		return ans;    
+    } 
