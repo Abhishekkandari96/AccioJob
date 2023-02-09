@@ -1,0 +1,52 @@
+ public static int maximumSum(int[] A, int[][] ops) {
+		/*
+  steps:
+  1-make step array->
+    to know the range where effect of elemnt will present;
+    and the size of step array should be equal to size of arry containing integer
+    increse start pointer
+	increse end+1 pointere if exist in side array , if not exist reamin it same
+ 2-make prefix sum of arrray of step array
+ 3-sort prefix sum sort original element array
+ 4-multiply crossponding element of both array and add it to have largest sum
+		*/
+
+
+		//step-1
+		
+		int step[]=new int[A.length];
+		for(int i=0;i<ops.length;i++){
+			int start=ops[i][0];
+			int end=ops[i][1];
+			step[start]++;                      // effect start
+			if(end+1<step.length) step[end+1]--; //effect end at this index
+		}
+		
+		
+		//step-2
+		
+		for(int i=1;i<step.length;i++){
+			step[i]=step[i]+step[i-1];
+		}
+
+		//step-3 sort
+		Arrays.sort(step);
+		Arrays.sort(A);
+		
+		
+
+		//step 4
+		int md=(int) 1e9+7;
+		int sum=0;
+		for(int i=0;i<step.length;i++){
+			sum=sum+((step[i]*A[i]))%md;
+			sum=sum%md;
+		}
+		return sum%md;
+
+		
+		
+		
+		
+    
+    }
