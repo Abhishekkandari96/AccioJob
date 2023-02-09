@@ -1,0 +1,55 @@
+
+ import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Main {
+	   public static void main(String args[]) {
+		  
+		        Scanner sc = new Scanner(System.in);
+		        int n = sc.nextInt();
+		        int[][] trips = new int[n][3];
+		        for (int i = 0; i < n; i++) {
+		            for (int j = 0; j < 3; j++) {
+		                trips[i][j] = sc.nextInt();
+		            }
+		        }
+		        int k = sc.nextInt();
+	           
+	        Solution obj= new Solution();
+	        System.out.println(obj.carPooling(trips,k));
+	    }
+}
+class Solution{
+  
+    public boolean carPooling(int[][] trips, int capacity) {
+		
+		//make prefix step array
+		int step[]=new int[10001];// int constarins from and to size denoting bus stops
+		for(int i=0;i<trips.length;i++){
+			int persons=trips[i][0];
+			int start=trips[i][1];
+			int end=trips[i][2];
+			step[start]=persons;
+			step[end+1]=-(persons);
+		}
+		
+
+		//make prefix sum array;
+		int prefix[]=new int[step.length];
+		 prefix[0]=step[0];
+		int max=Integer.MIN_VALUE;
+		for(int i=1;i<step.length;i++){
+			prefix[i]=prefix[i-1]+step[i];
+			max=Math.max(max,prefix[i]);
+		}
+	
+		if(max>capacity){
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+		
+}
+}
