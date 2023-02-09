@@ -6,3 +6,9 @@ topic includes-
               (c)-Stacks
               (d)-Queue
               (e)-HashMap/HashSet/TreeMap
+              (f)-BT
+              (g)-prifix sum
+              (h)-sliding window
+              (j)-kadane's algo
+              (k)-DFS
+              (l)-BFS
